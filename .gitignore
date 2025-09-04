@@ -1,0 +1,26 @@
+# Byte-compiled / Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ambientes virtuais
+venv/
+.env/
+
+# VS Code
+.vscode/
+
+# Arquivos de log
+*.log
+
+# Configurações do sistema
+.DS_Store
+Thumbs.db
+
+# Arquivos temporários de pacote
+*.egg-info/
+dist/
+build/
+
+
+data/
