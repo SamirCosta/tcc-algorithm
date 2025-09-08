@@ -1,4 +1,3 @@
-# Configuração para dataset COCO
 path: C:/Users/samir/git/tcc-algorithm  # dataset root dir
 train: data/images/train  # train images (relative to 'path')
 val: data/images/val      # val images (relative to 'path')
@@ -8,7 +7,6 @@ test: data/images/test    # test images (optional)
 train_annotations: data/labels/train/instances_train.json
 val_annotations: data/labels/val/instances_val.json
 
-# Classes (seguindo a ordem do seu dataset)
 names: 
   0: Worker
   1: Static crane

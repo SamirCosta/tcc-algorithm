@@ -20,7 +20,6 @@ if __name__ == "__main__":
         'save_period': 1,
         'verbose': True,
 
-        # Otimizações
         'optimizer': 'AdamW',
         'lr0': 0.01,
         'lrf': 0.1,
@@ -30,7 +29,6 @@ if __name__ == "__main__":
         'warmup_momentum': 0.8,
         'warmup_bias_lr': 0.1,
 
-        # Data Augmentation
         'hsv_h': 0.015,
         'hsv_s': 0.7,
         'hsv_v': 0.4,
@@ -45,41 +43,34 @@ if __name__ == "__main__":
         'mixup': 0.0,
         'copy_paste': 0.0,
 
-        # Configurações específicas de segmentação
         'overlap_mask': True,
         'mask_ratio': 4,
     }
 
-    print("⚙️ CONFIGURAÇÕES:")
+    print("CONFIGURAÇÕES:")
     for key, value in training_config.items():
         print(f"   {key}: {value}")
 
-    # Registrar início
     start_time = time.time()
     start_time_str = time.strftime("%H:%M:%S", time.localtime(start_time))
-    print(f"\n🕐 Início do treinamento: {start_time_str}")
+    print(f"\nInício do treinamento: {start_time_str}")
 
     try:
-        # TREINAR MODELO
         results = model.train(**training_config)
 
-        # Calcular tempo total
         end_time = time.time()
         training_time_hours = (end_time - start_time) / 3600
         end_time_str = time.strftime("%H:%M:%S", time.localtime(end_time))
 
-        print("\n" + "🎉" * 50)
-        print("🎉 TREINAMENTO CONCLUÍDO COM SUCESSO!")
-        print("🎉" * 50)
-        print(f"🕐 Início: {start_time_str}")
-        print(f"🕐 Fim: {end_time_str}")
-        print(f"⏱️ Tempo total: {training_time_hours:.2f} horas")
+        print("TREINAMENTO CONCLUÍDO COM SUCESSO")
+        print(f"Início: {start_time_str}")
+        print(f"Fim: {end_time_str}")
+        print(f"Tempo total: {training_time_hours:.2f} horas")
 
     except Exception as e:
-        print(f"\n❌ ERRO DURANTE TREINAMENTO: {e}")
-        print("\n🔄 TENTANDO COM CONFIGURAÇÕES REDUZIDAS...")
+        print(f"\nERRO DURANTE TREINAMENTO: {e}")
+        print("\nTENTANDO COM CONFIGURAÇÕES REDUZIDAS...")
 
-        # Configurações mais conservadoras
         training_config.update({
             'batch': 8,
             'imgsz': 512,
@@ -89,7 +80,7 @@ if __name__ == "__main__":
 
         try:
             results = model.train(**training_config)
-            print("✅ TREINAMENTO CONCLUÍDO COM CONFIGURAÇÕES REDUZIDAS!")
+            print("TREINAMENTO CONCLUÍDO COM CONFIGURAÇÕES REDUZIDAS!")
         except Exception as e2:
-            print(f"❌ ERRO MESMO COM CONFIGURAÇÕES REDUZIDAS: {e2}")
-            print("🆘 Tente reiniciar o runtime e reduzir ainda mais as configurações")
+            print(f"ERRO MESMO COM CONFIGURAÇÕES REDUZIDAS: {e2}")
+            print("Tente reiniciar o runtime e reduzir ainda mais as configurações")
