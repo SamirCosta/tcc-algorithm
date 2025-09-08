@@ -1,34 +1,95 @@
 if __name__ == "__main__":
-    import torch
+    import time
     from ultralytics import YOLO
-    # Carregar modelo YOLOv8 pré-treinado
+    
     model = YOLO("yolov8s-seg.pt")
 
-    # Treinar usando dataset no formato COCO
-    model.train(
-        data="data.yaml",
-        epochs=1,
-        imgsz=640,
-        batch=8,
-        device="0",          # Usa sua GPU
-        project="runs/train",
-        name="yolov8_workers",
-        save=True,
-        patience=20,         # Early stopping
-        workers=4,           # Threads para carregar imagens
-        val=True,            # Validação durante treino
-    )
+    training_config = {
+        'data': 'data.yaml',
+        'epochs': 100,
+        'imgsz': 640,
+        'batch': 8,
+        'device': 0,
+        'project': 'runs/train',
+        'name': 'yolov8_tcc_construction',
+        'save': True,
+        'patience': 20,
+        'workers': 4,
+        'val': True,
+        'plots': True,
+        'save_period': 1,
+        'verbose': True,
 
-    # model.train(
-    #     data="data.yaml",
-    #     epochs=100,
-    #     imgsz=640,
-    #     batch=8,
-    #     device="0",          # Usa sua GPU
-    #     project="runs/train",
-    #     name="yolov8_workers",
-    #     save=True,
-    #     patience=20,         # Early stopping
-    #     workers=4,           # Threads para carregar imagens
-    #     val=True,            # Validação durante treino
-    # )
+        # Otimizações
+        'optimizer': 'AdamW',
+        'lr0': 0.01,
+        'lrf': 0.1,
+        'momentum': 0.937,
+        'weight_decay': 0.0005,
+        'warmup_epochs': 3,
+        'warmup_momentum': 0.8,
+        'warmup_bias_lr': 0.1,
+
+        # Data Augmentation
+        'hsv_h': 0.015,
+        'hsv_s': 0.7,
+        'hsv_v': 0.4,
+        'degrees': 0.0,
+        'translate': 0.1,
+        'scale': 0.5,
+        'shear': 0.0,
+        'perspective': 0.0,
+        'flipud': 0.0,
+        'fliplr': 0.5,
+        'mosaic': 1.0,
+        'mixup': 0.0,
+        'copy_paste': 0.0,
+
+        # Configurações específicas de segmentação
+        'overlap_mask': True,
+        'mask_ratio': 4,
+    }
+
+    print("⚙️ CONFIGURAÇÕES:")
+    for key, value in training_config.items():
+        print(f"   {key}: {value}")
+
+    # Registrar início
+    start_time = time.time()
+    start_time_str = time.strftime("%H:%M:%S", time.localtime(start_time))
+    print(f"\n🕐 Início do treinamento: {start_time_str}")
+
+    try:
+        # TREINAR MODELO
+        results = model.train(**training_config)
+
+        # Calcular tempo total
+        end_time = time.time()
+        training_time_hours = (end_time - start_time) / 3600
+        end_time_str = time.strftime("%H:%M:%S", time.localtime(end_time))
+
+        print("\n" + "🎉" * 50)
+        print("🎉 TREINAMENTO CONCLUÍDO COM SUCESSO!")
+        print("🎉" * 50)
+        print(f"🕐 Início: {start_time_str}")
+        print(f"🕐 Fim: {end_time_str}")
+        print(f"⏱️ Tempo total: {training_time_hours:.2f} horas")
+
+    except Exception as e:
+        print(f"\n❌ ERRO DURANTE TREINAMENTO: {e}")
+        print("\n🔄 TENTANDO COM CONFIGURAÇÕES REDUZIDAS...")
+
+        # Configurações mais conservadoras
+        training_config.update({
+            'batch': 8,
+            'imgsz': 512,
+            'workers': 1,
+            'amp': False
+        })
+
+        try:
+            results = model.train(**training_config)
+            print("✅ TREINAMENTO CONCLUÍDO COM CONFIGURAÇÕES REDUZIDAS!")
+        except Exception as e2:
+            print(f"❌ ERRO MESMO COM CONFIGURAÇÕES REDUZIDAS: {e2}")
+            print("🆘 Tente reiniciar o runtime e reduzir ainda mais as configurações")
