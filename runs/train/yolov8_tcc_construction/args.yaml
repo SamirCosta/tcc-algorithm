@@ -2,7 +2,7 @@ task: segment
 mode: train
 model: yolov8s-seg.pt
 data: data.yaml
-epochs: 1
+epochs: 100
 time: null
 patience: 20
 batch: 8
@@ -13,7 +13,7 @@ cache: false
 device: '0'
 workers: 4
 project: runs/train
-name: yolov8_tcc_construction
+name: yolov8_tcc_construction2
 exist_ok: false
 pretrained: true
 optimizer: AdamW
@@ -102,4 +102,4 @@ auto_augment: randaugment
 erasing: 0.4
 cfg: null
 tracker: botsort.yaml
-save_dir: C:\Users\samir\git\tcc-algorithm\runs\train\yolov8_tcc_construction
+save_dir: C:\Users\samir\git\tcc-algorithm\runs\train\yolov8_tcc_construction2
