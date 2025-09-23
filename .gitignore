@@ -28,3 +28,8 @@ dataset_unified
 ACID_reorganized
 ACID
 runs
+
+
+node_modules/
+package-lock.json
+package.json
