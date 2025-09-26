@@ -1,9 +1,0 @@
-data
-├───images
-│   ├───instances_test
-│   │   └───instances_test
-│   ├───train
-│   └───val
-└───labels
-    ├───train
-    └───val
