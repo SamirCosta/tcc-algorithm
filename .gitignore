@@ -5,6 +5,7 @@ __pycache__/
 
 # Ambientes virtuais
 venv/
+.venv/
 .env/
 
 # VS Code
@@ -27,7 +28,7 @@ data/
 dataset_unified
 ACID_reorganized
 ACID
-runs
+
 
 
 node_modules/
