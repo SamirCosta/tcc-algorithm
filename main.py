@@ -1,8 +1,8 @@
 if __name__ == "__main__":
     import time
-    from ultralytics import YOLO
+    from ultralytics import YOLO 
     
-    model = YOLO("yolov8s-seg.pt")
+    model = YOLO("C:/Users/Fei-Lab/Desktop/tcc-algorithm/modelos_treinados/mocs_fei/best.pt")
 
     training_config = {
         'data': 'data.yaml',
@@ -11,7 +11,7 @@ if __name__ == "__main__":
         'batch': 3,                 # Batch size para RTX 2080 com YOLOv8l
         'device': 0,                # GPU 0
         'project': 'runs/train',
-        'name': 'yolov8s',
+        'name': 'yolov8s_mocs_acid_fei',
         'save': True,
         'save_period': 5,           # Salvar checkpoint a cada 5 épocas
         'patience': 30,             # Early stopping patience
@@ -99,7 +99,7 @@ if __name__ == "__main__":
 
     start_time = time.time()
     start_time_str = time.strftime("%H:%M:%S", time.localtime(start_time))
-    print(f"\nInício do treinamento: {start_time_str}")
+    print(f"/nInício do treinamento: {start_time_str}")
 
     results = model.train(**training_config)
 
